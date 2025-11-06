@@ -1,0 +1,12 @@
+<template>
+    <template if:true={isMenuLabel}>
+        <div class="menuLabel" title={item.label}>
+            <lightning-formatted-rich-text value={item.label}></lightning-formatted-rich-text>
+        </div>
+    </template>
+    <template if:false={isMenuLabel}>
+        <a href={href} onclick={handleClick} title={item.label}>
+            <lightning-formatted-rich-text value={item.label}></lightning-formatted-rich-text>
+        </a>
+    </template>
+</template>

@@ -1,0 +1,23 @@
+a{
+    color: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    text-decoration: inherit;
+}
+
+:host(.navItem) .menuLabel {
+    color: inherit !important;
+    font-size: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    text-decoration: none !important;
+    font-weight: 600;
+    cursor: default;
+    pointer-events: none;
+    display: block;
+}
+
+:host(.navItem) .menuLabel:hover {
+    text-decoration: none !important;
+}

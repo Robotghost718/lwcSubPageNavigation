@@ -1,0 +1,9 @@
+<template>
+    <ul class="forceCommunityRichText">
+               <template for:each={menuItems} for:item="item">
+                   <li class="forceCommunityRichText" key={item.id}>
+                    <c-bulleted-nav-item item={item} class="navItem slds-text-align_left" data-id={item.id}></c-bulleted-nav-item>
+                   </li>
+               </template>
+    </ul>
+</template>

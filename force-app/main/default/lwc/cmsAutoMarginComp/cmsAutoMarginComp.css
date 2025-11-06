@@ -1,0 +1,31 @@
+/* Based on Salesforce Experience Cloud best practices
+   Reference: https://gist.github.com/gregejankowski/9244de7330ebcb2dca7062bbcda60ef4 */
+
+/* IMPORTANT: lightning-formatted-rich-text uses Shadow DOM which blocks external CSS.
+   We need to override using ::part() or pierce the shadow DOM */
+
+/* Try to target through the part attribute */
+lightning-formatted-rich-text::part(formatted-rich-text) ol {
+    counter-reset: item !important;
+    list-style-type: none !important;
+}
+
+lightning-formatted-rich-text::part(formatted-rich-text) ol li:before {
+    content: "" !important;
+    display: none !important;
+}
+
+lightning-formatted-rich-text::part(formatted-rich-text) ol > li::before {
+    content: counter(item, decimal) ". " !important;
+    display: inline !important;
+    counter-increment: item !important;
+}
+
+/* List spacing */
+lightning-formatted-rich-text::part(formatted-rich-text) ol li {
+    margin-bottom: 6px;
+}
+
+:host {
+    display: block;
+}

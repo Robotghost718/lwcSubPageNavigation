@@ -1,0 +1,32 @@
+:host{
+    --slds-c-link-disabled-color: black;
+    --slds-c-link-color: rgb(0, 117, 215);
+}
+ul{
+      display: block;
+    list-style-type: none;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    padding-inline-start: 40px;
+    unicode-bidi: isolate;
+}
+.selectedSubPage > a{
+    color: var(--slds-c-link-disabled-color);
+    pointer-events: none;
+}
+.selectedSubPage{
+    pointer-events: none;
+    color: var(--slds-c-link-disabled-color)!important;
+}
+.navItem{
+    display: inline-block;
+    font-size:  0.8125rem;
+    color: var(--slds-c-link-color);
+    text-decoration: none;
+}
+.navItem:hover{
+    text-decoration: underline;
+}
+ul>li::before{
+    content:'\2022'
+}
