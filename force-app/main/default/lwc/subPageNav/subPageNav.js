@@ -41,6 +41,8 @@ export default class subPageNav extends NavigationMixin(LightningElement) {
      */
     @track error;
 
+    chacheMenuItems = [];
+    cacheLinkSetMasterLabel
     /**
      * the published state of the site, used to determine from which schema to 
      * fetch the NavigationMenuItems
@@ -116,9 +118,39 @@ export default class subPageNav extends NavigationMixin(LightningElement) {
             // If searchPath is "/foo", lastSlashIndexInPath is 0, returns "foo"
             // If searchPath is "/foo/", lastSlashIndexInPath is the index of the trailing slash, returns ""
             return searchPath.substring(lastSlashIndexInPath + 1);
+    }
+    }
+    
+    /**
+     * Extract the full pathname from the current URL, normalized for comparison.
+     * Returns the pathname without trailing slash (unless it's just "/").
+     */
+    extractFullPath() {
+        try {
+            const currentUrl = new URL(window.location.href);
+            let pathname = currentUrl.pathname;
+            // Normalize: remove trailing slash unless it's the root path
+            if (pathname !== '/' && pathname.endsWith('/')) {
+                pathname = pathname.slice(0, -1);
+            }
+            return pathname;
+        } catch (e) {
+            console.warn('Could not parse URL with URL constructor in extractFullPath:', e);
+            return window.location.pathname || '/';
         }
     }
-
+    
+    /**
+     * Normalize a target URL path for comparison.
+     * Removes trailing slash unless it's just "/".
+     */
+    normalizePath(path) {
+        if (!path) return '';
+        if (path !== '/' && path.endsWith('/')) {
+            return path.slice(0, -1);
+        }
+        return path;
+    }
     // ...existing code...
     // @api selectedName;
     /**
@@ -142,14 +174,44 @@ export default class subPageNav extends NavigationMixin(LightningElement) {
                continue;
            }
            
-           if( this.menuItems[i].target && this.menuItems[i].target.endsWith(this.extractUrlSegment() )){
-               element.classList.add('selectedSubPage');
-               console.log('selectedSubPage', this.menuItems[i].target);
-               console.log('extractUrlSegment', this.extractUrlSegment());
+           // Only apply selectedSubPage class to internal links (not external URLs)
+           const target = this.menuItems[i].target;
+           const currentFullPath = this.extractFullPath();
+           const normalizedTarget = this.normalizePath(target);
+           
+           console.log('Checking item:', { 
+               target, 
+               normalizedTarget,
+               currentFullPath, 
+               label: this.menuItems[i].label 
+           });
+           
+           // Check if target is an external link
+           const isExternalLink = target && target.match(/^(https?:|\/\/|mailto:|tel:)/i);
+           
+           // For internal links, check if they match the current page using full path comparison
+           let matchesCurrentPage = false;
+           if (target && !isExternalLink) {
+               // Direct path match (most reliable)
+               matchesCurrentPage = normalizedTarget === currentFullPath;
+               
+               // If no direct match and target doesn't start with '/', 
+               // try matching against the last segment (for backward compatibility)
+               if (!matchesCurrentPage && !target.startsWith('/')) {
+                   const urlSegment = this.extractUrlSegment();
+                   matchesCurrentPage = target === urlSegment;
+               }
            }
-           else {
-            element.classList.remove('selectedSubPage');
-        }
+           
+           if (!isExternalLink && matchesCurrentPage) {
+               element.classList.add('selectedSubPage');
+               console.log('✓ Applied selectedSubPage to:', target);
+           } else {
+               element.classList.remove('selectedSubPage');
+               if (!isExternalLink && target) {
+                   console.log('✗ Not selected:', target, '(current path:', currentFullPath + ')');
+               }
+           }
     }
     console.log('subpageNav connectedCallback');
 }
