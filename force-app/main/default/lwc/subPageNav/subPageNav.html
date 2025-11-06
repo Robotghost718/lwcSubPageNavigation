@@ -1,0 +1,20 @@
+<template>
+    <lightning-vertical-navigation>
+               <template for:each={menuItems} for:item="item">
+                   <template if:true={item.isMenuLabel}>
+                       <h3 key={item.id} class="slds-text-align_left">
+                           {item.label}
+                       </h3>
+                   </template>
+                   <template if:false={item.isMenuLabel}>
+                       <div key={item.id}>
+                        <c-child-sub-page-item 
+                            item={item} 
+                            class="navItem slds-text-align_left"
+                            data-id={item.id}>
+                        </c-child-sub-page-item>
+                       </div>
+                   </template>
+               </template>
+    </lightning-vertical-navigation>
+</template>

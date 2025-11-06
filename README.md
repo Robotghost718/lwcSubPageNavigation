@@ -17,6 +17,7 @@ A custom Lightning Web Component (LWC) navigation solution for Salesforce Experi
 ### Navigation Components
 
 - **`bulletedSubPageNav`**: Main sub-page navigation component with bulleted list styling
+- **`subPageNav`**: Vertical navigation component with support for menu labels and hierarchical items
 - **`bulletedNavItem`**: Individual navigation item with styling
 - **`childNavMenuItem`**: Child navigation menu item component
 - **`childSubPageItem`**: Sub-page child item component

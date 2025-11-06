@@ -1,0 +1,31 @@
+:host{
+    --slds-c-link-disabled-color: black;
+    --slds-c-link-color: rgb(0, 117, 215);
+}
+.selectedSubPage > a{
+    color: var(--slds-c-link-disabled-color);
+    pointer-events: none;
+}
+.selectedSubPage{
+    pointer-events: none;
+    color: var(--slds-c-link-disabled-color)!important;
+}
+.navItem{
+    display: block;
+    margin-top: .5rem;
+    font-size:  0.875rem;
+    color: var(--slds-c-link-color);
+    text-decoration: none;
+}
+.navItem:hover{
+    text-decoration: underline;
+}
+h3 {
+    display: block;
+    margin-top: .5rem;
+    font-size: 1.125rem;
+    color: inherit;
+    cursor: default;
+    pointer-events: none;
+    margin-bottom: 0;
+}
