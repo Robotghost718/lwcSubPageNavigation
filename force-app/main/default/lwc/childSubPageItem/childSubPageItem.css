@@ -6,6 +6,15 @@ a{
     text-decoration: inherit;
 }
 
+:host(.selectedSubPage) a {
+    color: black;
+    pointer-events: none;
+}
+
+:host(.selectedSubPage) {
+    color: black !important;
+}
+
 :host(.navItem) .menuLabel {
     color: inherit !important;
     font-size: inherit;
